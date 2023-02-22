@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import ArticleList from "./pages/ArticleList";
 import Article from "./pages/Article";
+import NotFound from './pages/NotFound';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
 						<Route path='/about' element={ <About /> } />
 						<Route path='/articles' element={ <ArticleList /> } />
 						<Route path='/articles/:articleId' element={ <Article /> } />
+						<Route path='*' element={ <NotFound /> } />
 					</Routes>
 				</div>
 			</div>
