@@ -17,7 +17,22 @@ import express from 'express';
 // 	credential: admin.credential.cert(credentials),
 // });
 
- const app = express();
+let articlesInfo = [
+	{
+		name: 'learn-react',
+		upvotes: 0
+	},
+	{
+		name: 'learn-node',
+		upvotes: 0
+	},
+	{
+		name: 'learn-mongo',
+		upvotes: 0
+	}
+];
+
+const app = express();
 // app.use(express.json());
 // app.use(express.static(path.join(__dirname, '../build')));
 
@@ -40,10 +55,6 @@ import express from 'express';
 
 // 	next();
 // });
-
-app.get('/hello', (req, res) => {
-	res.send('Hello');
-});
 
 // app.get('/api/articles/:name', async (req, res) => {
 // 	const { name } = req.params;
@@ -68,46 +79,46 @@ app.get('/hello', (req, res) => {
 // 	}
 // });
 
-// app.put('/api/articles/:name/upvote', async (req, res) => {
-// 	const { name } = req.params;
-// 	const { uid } = req.user;
+app.put('/api/articles/:name/upvote', async (req, res) => {
+	const { name } = req.params;
+	const { uid } = req.user;
 
-// 	const article = await db.collection('articles').findOne({ name });
+	const article = await db.collection('articles').findOne({ name });
 
-// 	if (article) {
-// 		const upvoteIds = article.upvoteIds || [];
-// 		const canUpvote = uid && !upvoteIds.includes(uid);
+	if (article) {
+		const upvoteIds = article.upvoteIds || [];
+		const canUpvote = uid && !upvoteIds.includes(uid);
 
-// 		if (canUpvote) {
-// 			await db.collection('articles').updateOne({ name }, {
-// 				$inc: { upvotes: 1 },
-// 				$push: { upvoteIds: uid },
-// 			});
-// 		}
+		if (canUpvote) {
+			await db.collection('articles').updateOne({ name }, {
+				$inc: { upvotes: 1 },
+				$push: { upvoteIds: uid },
+			});
+		}
 
-// 		const updatedArticle = await db.collection('articles').findOne({ name });
-// 		res.json(updatedArticle);
-// 	} else {
-// 		res.send('That article doesn\'t exist');
-// 	}
-// });
+		const updatedArticle = await db.collection('articles').findOne({ name });
+		res.json(updatedArticle);
+	} else {
+		res.send('That article doesn\'t exist');
+	}
+});
 
-// app.post('/api/articles/:name/comments', async (req, res) => {
-// 	const { name } = req.params;
-// 	const { text } = req.body;
-// 	const { email } = req.user;
+app.post('/api/articles/:name/comments', async (req, res) => {
+	const { name } = req.params;
+	const { text } = req.body;
+	const { email } = req.user;
 
-// 	await db.collection('articles').updateOne({ name }, {
-// 		$push: { comments: { postedBy: email, text } },
-// 	});
-// 	const article = await db.collection('articles').findOne({ name });
+	await db.collection('articles').updateOne({ name }, {
+		$push: { comments: { postedBy: email, text } },
+	});
+	const article = await db.collection('articles').findOne({ name });
 
-// 	if (article) {
-// 		res.json(article);
-// 	} else {
-// 		res.send('That article doesn\'t exist!');
-// 	}
-// });
+	if (article) {
+		res.json(article);
+	} else {
+		res.send('That article doesn\'t exist!');
+	}
+});
 
 // const PORT = process.env.PORT || 8000;
 
