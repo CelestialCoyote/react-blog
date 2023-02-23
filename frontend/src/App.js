@@ -3,7 +3,7 @@ import NavBar from './components/NavBar/NavBar';
 import Home from "./pages/Home";
 import About from "./pages/About";
 import ArticleList from "./pages/ArticleList";
-import Article from "./pages/Article";
+import Article from "./pages/Article/Article";
 import NotFound from './pages/NotFound';
 
 
