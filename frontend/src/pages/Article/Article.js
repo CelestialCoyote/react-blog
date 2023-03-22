@@ -23,7 +23,7 @@ const Article = () => {
 			setArticleInfo(response.data);
 		};
 
-		if (isLoading) {
+		if (!isLoading) {
 			loadArticleInfo();
 		};
 	}, [isLoading, user]);
